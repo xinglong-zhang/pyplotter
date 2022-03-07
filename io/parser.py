@@ -50,7 +50,7 @@ class FileReader(object):
 
     @property
     def basename(self):
-        return self.filename[:-4]
+        return self.filename.split('/')[-1].split('.')[0]
 
     @property
     def num_columns(self):
