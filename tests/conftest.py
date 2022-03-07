@@ -1,0 +1,26 @@
+import logging
+import os
+import pytest
+logger = logging.getLogger(__name__)
+
+
+@pytest.fixture()
+def test_data_path():
+    test_data_path = 'data'
+    return test_data_path
+
+
+@pytest.fixture
+def colvar_file(test_data_path):
+    colvar_file = os.path.join(test_data_path, 'COLVAR')
+    return colvar_file
+
+@pytest.fixture
+def two_cols_path(test_data_path):
+    two_cols_path = os.path.join(test_data_path, 'two_cols_plot.txt')
+    return two_cols_path
+
+@pytest.fixture
+def five_cols_path(test_data_path):
+    five_cols_path = os.path.join(test_data_path, 'five_cols_plot.txt')
+    return five_cols_path
