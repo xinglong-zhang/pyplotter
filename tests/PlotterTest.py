@@ -22,6 +22,7 @@ class TestPlotterTest(object):
         plotter.plot_2d_line_scatter_bars(plot_mode='line')
         plotter.plot_2d_line_scatter_bars(plot_mode='scatter')
         plotter.plot_2d_line_scatter_bars(plot_mode='bar')
+        plotter.plot_2d_line_scatter_bars(plot_mode='bar', x_col=0, y_col=2)
 
         plotter.plot_2d_line_scatter_bars(plot_mode='grouped_bar')  # plot all data (x and 4 y values
         plotter.plot_2d_line_scatter_bars(plot_mode='grouped_bar', grouped_bar_cols_to_plot='1')  # (x and y1)
@@ -31,4 +32,13 @@ class TestPlotterTest(object):
 
         plotter.plot_2d_line_scatter_bars(plot_mode='grouped_bar', grouped_bar_cols_to_plot='2,3')  # (x and y2, y3)
         plotter.plot_2d_line_scatter_bars(plot_mode='grouped_bar', grouped_bar_cols_to_plot='1,4')  # (x and y1, y4)
+
+
+    def test_plot_five_cols_3d(self, tmpdir, five_cols_path):
+        plotter = Plotter(filename=five_cols_path, save_folder=tmpdir)
+        plotter.plot_3d_line_scatter_bars(plot_mode='line')
+        plotter.plot_3d_line_scatter_bars(plot_mode='line', x_col=0, y_col=0, z_col=0)
+        plotter.plot_3d_line_scatter_bars(plot_mode='scatter')
+        plotter.plot_3d_line_scatter_bars(plot_mode='scatter', x_col=0, y_col=0, z_col=0)
+        plotter.plot_3d_line_scatter_bars(plot_mode='bar', title='test')
 
