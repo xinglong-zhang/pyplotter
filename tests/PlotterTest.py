@@ -1,7 +1,7 @@
 import os
 import logging
 import pytest
-from pyplotter.plotters.barplots import Plotter
+from pyplotter.plotters.plots import Plotter
 import logging
 from pyatoms.utils.logging import create_logger
 logger = logging.getLogger(__name__)
@@ -20,6 +20,7 @@ class TestPlotterTest(object):
     def test_plot_five_cols(self, tmpdir, five_cols_path):
         plotter = Plotter(filename=five_cols_path, save_folder=tmpdir)
         plotter.plot_2d_line_scatter_bars(plot_mode='line')
+        plotter.plot_2d_line_scatter_bars(plot_mode='grouped_line', grouped_line_cols_to_plot='2,3')  # (x and y1, y2)
         plotter.plot_2d_line_scatter_bars(plot_mode='scatter')
         plotter.plot_2d_line_scatter_bars(plot_mode='bar')
         plotter.plot_2d_line_scatter_bars(plot_mode='bar', x_col=0, y_col=2)

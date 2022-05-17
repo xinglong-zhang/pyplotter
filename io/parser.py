@@ -32,15 +32,15 @@ class FileReader(object):
     def _get_headings(self):
         headings = []
         with open(self.filename, 'r') as f:
-            first_line = f.readlines()[0]
-            if first_line.startswith('#'):
-                line_element = first_line.split('#')[-1].strip().split()
-                assert len(line_element) == self.num_columns, \
-                    f'Number of headings should be the same as number of data columns.\n' \
-                    f'Use one string per column heading.'
-                for i in line_element:
-                    headings.append(i)
-                return headings
+            lines = f.readlines()
+            for line in lines:
+                line_element = line.split('#')[-1].strip().split()
+                if line.startswith('#') and len(line_element) != self.num_columns:
+                    pass
+                elif line.startswith('#') and len(line_element) == self.num_columns:
+                    for i in line_element:
+                        headings.append(i)
+                    return headings
             else:
                 # when no heading is supplied
                 for i in self.num_columns:
@@ -76,7 +76,6 @@ class FileReader(object):
                 line_elem = line.split('#')[0].strip().split()
             else:
                 line_elem = line.split()
-            print(f'line elem; {line_elem}')
             for j in range(self.num_columns):
                 data[j].append(float(line_elem[j]))
         return data

@@ -2,7 +2,7 @@
 import click
 from pyatoms.analysis.dias import GaussianDIASLogFolder
 from pyplotter.io.parser import FileReader
-from pyplotter.plotters.barplots import Plotter
+from pyplotter.plotters.plots import Plotter
 from pyatoms.utils.utils import spline_data
 from matplotlib import pyplot as plt
 
