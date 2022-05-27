@@ -23,12 +23,13 @@ from pyplotter.plotters.scan_energies_plots import ScanPlotter
 @click.option('-lf', '--label-fontsize', type=int, default=10, help='Fontsize of the axes labels.')
 @click.option('-sf', '--save-format', type=str, default='pdf', help='Format of plot to be saved.')
 @click.option('-r', '--reference/--no-reference', type=bool, default=False, help='To take first data point as energy min for reference.')
-
+@click.option('-i', '--inverse-x-axis/--no-inverse-x-axis', type=bool, default=False, help='Inverse x-axis.')
 def entry_point(filename, save_folder, write_filename, plot_mode, x_col, y_col,
                 xmin, xmax, ymin, ymax, lines, xlabel, ylabel, title,
-                plot_width, plot_height, label_fontsize, save_format, reference):
-    ### example usage
-    # plot_scan_energies.py -f iron_complexA_quartet_opt_FeC_allyl_scan_tot_ener.txt -xl "Fe-C bond distance/\AA" -yl "Relative energy/kcal mol\^{-1}" -lf 10
+                plot_width, plot_height, label_fontsize, save_format, reference, inverse_x_axis):
+    """Example usage:\n
+    `plot_scan_energies.py -f iron_complexA_quartet_opt_FeC_allyl_scan_tot_ener.txt -xl "Fe-C bond distance/\AA" -yl "Relative energy/kcal mol\^{-1}" -lf 10 -r`
+    """
     create_logger()
     plotter = ScanPlotter(
         filename=filename, save_folder=save_folder, write_filename=write_filename,
@@ -37,7 +38,7 @@ def entry_point(filename, save_folder, write_filename, plot_mode, x_col, y_col,
     )
     plotter.plot_energy_scan(
         xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, lines=lines, xlabel=xlabel, ylabel=ylabel, title=title,
-        first_point_ref=reference
+        first_point_ref=reference, inverse_x_axis=inverse_x_axis
     )
 
 if __name__ == '__main__':

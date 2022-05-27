@@ -8,7 +8,7 @@ class ScanPlotter(Plotter):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def plot_energy_scan(self, first_point_ref=False, **kwargs):
+    def plot_energy_scan(self, first_point_ref=False, inverse_x_axis=False, **kwargs):
         plt = self.plt
         x_data = self.data[0]
         y_data = self.data[1]
@@ -31,6 +31,9 @@ class ScanPlotter(Plotter):
         # Only show ticks on the left and bottom spines
         ax.yaxis.set_ticks_position('left')
         ax.xaxis.set_ticks_position('bottom')
+
+        if inverse_x_axis:
+            ax.invert_xaxis()
 
         plt.plot(x_data, y_data, 'o-')
         self._set_plot_2d(plt=plt, x_col=0, y_col=1, **kwargs)
