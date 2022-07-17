@@ -156,27 +156,19 @@ class Plotter(object):
         # plt.axes().yaxis.set_minor_locator(MultipleLocator(5))
         # return ax
 
-    def _set_plot_2d(
-            self,
-            plt,  # plt object to be returned
-            x_col=0, y_col=1,  # cols for plotting
-            lines=False,  # plot x=0 and y=0 lines
-            xlabel=None,  # specify label for x-axis
-            ylabel=None,  # specify label for y-axis
-            legend = False,  # specify legend
-            xmin=None, xmax=None, ymin=None, ymax=None, # specify ranges for plot
-            title=None # specify title for the plot
-    ):
+    def get_data_ranges(self, x_data, y_data):
         # get data ranges
-        data_xmin = min(self.data[x_col])
-        data_xmax = max(self.data[x_col])
+        data_xmin = min(x_data)
+        data_xmax = max(x_data)
         x_ranges = data_xmax - data_xmin
 
-        data_ymin = min(self.data[y_col])
-        data_ymax = max(self.data[y_col])
+        data_ymin = min(y_data)
+        data_ymax = max(y_data)
         y_ranges = data_ymax - data_ymin
+        return data_xmin, data_xmax, x_ranges, data_ymin, data_ymax, y_ranges
 
-        # set plots
+    def set_data_ranges(self, xmin=None, xmax=None, ymin=None, ymax=None,
+                        data_xmin=None, data_xmax=None, data_ymin=None, data_ymax=None):
         # set plot limits
         if xmin is not None and xmax is not None:
             plt.xlim(left=xmin, right=xmax)
@@ -191,6 +183,26 @@ class Plotter(object):
             plt.ylim(data_ymin, ymax)
         elif ymin is not None:
             plt.ylim(ymin, data_ymax)
+
+    def _set_plot_2d(
+            self,
+            plt,  # plt object to be returned
+            x_col=None, y_col=None,  # cols for plotting
+            lines=False,  # plot x=0 and y=0 lines
+            xlabel=None,  # specify label for x-axis
+            ylabel=None,  # specify label for y-axis
+            legend = False,  # specify legend
+            xmin=None, xmax=None, ymin=None, ymax=None, # specify ranges for plot
+            title=None # specify title for the plot
+    ):
+
+        if x_col is not None and y_col is not None:
+            data_xmin, data_xmax, x_ranges, data_ymin, data_ymax, y_ranges \
+                = self.get_data_ranges(x_data=self.data[x_col], y_data=self.data[y_col])
+
+            self.set_data_ranges(
+                xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax,
+                data_xmin=data_xmin, data_xmax=data_xmax, data_ymin=data_ymin, data_ymax=data_ymax)
 
         if lines:
             # plot lines to split the quadrants

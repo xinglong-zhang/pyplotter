@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8bc815dd-f441-48c7-ac8b-c4f623e0b06a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/plotters/job_runtime_plots.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/plot_job_runtime.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/pyplotter.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/pyplotter.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/io/parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/io/parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plotters/job_runtime_plots.py" beforeDir="false" afterPath="$PROJECT_DIR$/plotters/job_runtime_plots.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plotters/plots.py" beforeDir="false" afterPath="$PROJECT_DIR$/plotters/plots.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/dias_plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/dias_plot_all_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/plot_job_runtime.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/plot_job_runtime.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +81,7 @@
       <workItem from="1656919400888" duration="17000" />
       <workItem from="1656919422137" duration="9000" />
       <workItem from="1656930516131" duration="5000" />
-      <workItem from="1658029189382" duration="849000" />
+      <workItem from="1658029189382" duration="2970000" />
     </task>
     <servers />
   </component>
@@ -102,6 +100,6 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/pyplotter$pytest_in_PlotterTest_py.coverage" NAME="pytest in PlotterTest.py Coverage Results" MODIFIED="1658029598623" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/pyplotter$pytest_in_PlotterTest_py.coverage" NAME="pytest in PlotterTest.py Coverage Results" MODIFIED="1658032160107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>
