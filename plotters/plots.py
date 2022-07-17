@@ -218,7 +218,7 @@ class Plotter(object):
             else:
                 plt.xlabel(f'{xlabel}', fontsize=self.label_fontsize)
         else:
-            if self.labels is not None:
+            if self.labels is not None and x_col is not None:
                 logger.info(fr'labels: {self.labels}')
                 plt.xlabel(fr'{self.labels[x_col].replace("_", " ")}', fontsize=self.label_fontsize)
 
@@ -229,7 +229,7 @@ class Plotter(object):
                 plt.ylabel(fr'{ylabel}', fontsize=self.label_fontsize)
             else:
                 plt.ylabel(f'{ylabel}', fontsize=self.label_fontsize)
-        else:
+        elif ylabel is None and y_col is not None:
             plt.ylabel(f'{self.labels[y_col].replace("_", " ")}', fontsize=self.label_fontsize)
         if legend:
             plt.legend(loc='upper center', ncol=self.num_data)

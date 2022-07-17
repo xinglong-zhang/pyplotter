@@ -112,7 +112,7 @@ class DIASPlotter(object):
 
 
 @click.command()
-@click.option('-f', '--filenames', type=str, multiple=True, help='Filenames to plot. Accepts multiple values.')
+@click.option('-f', '--logfiles', type=str, multiple=True, help='Filenames to plot. Accepts multiple values.')
 @click.option('-l', '--new-length', type=int, default=1000, help='Number of spline points.')
 @click.option('-k', '--k-value', type=int, default=3, help='Degree of the smoothing spline. Must be 1 <= k <= 5. k = 3 is a cubic spline. Default is 3.')
 @click.option('-r', '--reversed/--no-reversed', type=bool, default=True, help='Option to reverse reaction coordinates.')
