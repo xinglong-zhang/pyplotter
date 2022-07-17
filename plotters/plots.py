@@ -154,7 +154,7 @@ class Plotter(object):
         # ax.xaxis.set_minor_locator(MultipleLocator(5))
         # plt.axes().xaxis.set_minor_locator(MultipleLocator(5))
         # plt.axes().yaxis.set_minor_locator(MultipleLocator(5))
-        return ax
+        # return ax
 
     def _set_plot_2d(
             self,

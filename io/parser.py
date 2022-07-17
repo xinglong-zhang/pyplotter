@@ -77,7 +77,10 @@ class FileReader(object):
             else:
                 line_elem = line.split()
             for j in range(self.num_columns):
-                data[j].append(float(line_elem[j]))
+                try:
+                    data[j].append(float(line_elem[j]))
+                except ValueError:
+                    data[j].append(line_elem[j])
         return data
 
 

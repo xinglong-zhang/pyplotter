@@ -2,7 +2,6 @@
 import click
 from pyatoms.analysis.dias import GaussianDIASLogFolder
 from pyplotter.io.parser import FileReader
-from pyplotter.plotters.plots import Plotter
 from pyatoms.utils.utils import spline_data
 from matplotlib import pyplot as plt
 
@@ -106,10 +105,10 @@ class DIASPlotter(object):
 
         ax.yaxis.set_tick_params(length=5, direction='in')
 
-
         # legend box centre top
         ax.legend(loc="upper center", ncol=3, frameon=True, columnspacing=1.5, prop={'size': 12}, handletextpad=0.3)
         plt.savefig('test.pdf', format='pdf', dpi=500, bbox_inches='tight')
+        plt.show()
 
 
 @click.command()
@@ -118,7 +117,7 @@ class DIASPlotter(object):
 @click.option('-k', '--k-value', type=int, default=3, help='Degree of the smoothing spline. Must be 1 <= k <= 5. k = 3 is a cubic spline. Default is 3.')
 @click.option('-r', '--reversed/--no-reversed', type=bool, default=True, help='Option to reverse reaction coordinates.')
 @click.option('-x', '--x-scale', type=float, default=0.05, help='Scale along xlim.')
-@click.option('-y', '--y-scale', type=float, default=3, help='Scale alog y-lim.')
+@click.option('-y', '--y-scale', type=float, default=3, help='Scale along y-lim.')
 def entry_point(filenames, new_length, k_value, reversed, x_scale, y_scale):
     dias_plotter = DIASPlotter(filenames)
     dias_plotter.plot_all(new_length=new_length, k=k_value, reversed=reversed, x_scale=x_scale, y_scale=y_scale)
