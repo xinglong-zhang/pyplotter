@@ -2,6 +2,7 @@ import os
 import logging
 import pytest
 from pyplotter.plotters.plots import Plotter
+from pyplotter.plotters.errors_plots import ErrorPlotter
 import logging
 from pyatoms.utils.logging import create_logger
 logger = logging.getLogger(__name__)
@@ -42,4 +43,8 @@ class TestPlotterTest(object):
         plotter.plot_3d_line_scatter_bars(plot_mode='scatter')
         plotter.plot_3d_line_scatter_bars(plot_mode='scatter', x_col=0, y_col=0, z_col=0)
         plotter.plot_3d_line_scatter_bars(plot_mode='bar', title='test')
+
+    def test_plot_with_error_bars(self, tmpdir, data_with_error_bars):
+        plotter = ErrorPlotter(filename=data_with_error_bars, save_folder=tmpdir)
+        plotter.plot_scatter_with_lines_and_error_bars(data_labels_list=['MTP', 'Schnet', 'ANI'])
 

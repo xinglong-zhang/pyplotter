@@ -167,7 +167,7 @@ class Plotter(object):
         y_ranges = data_ymax - data_ymin
         return data_xmin, data_xmax, x_ranges, data_ymin, data_ymax, y_ranges
 
-    def set_data_ranges(self, xmin=None, xmax=None, ymin=None, ymax=None,
+    def _set_data_ranges(self, plt, xmin=None, xmax=None, ymin=None, ymax=None,
                         data_xmin=None, data_xmax=None, data_ymin=None, data_ymax=None):
         # set plot limits
         if xmin is not None and xmax is not None:
@@ -183,6 +183,7 @@ class Plotter(object):
             plt.ylim(data_ymin, ymax)
         elif ymin is not None:
             plt.ylim(ymin, data_ymax)
+        return plt
 
     def _set_plot_2d(
             self,
@@ -191,18 +192,21 @@ class Plotter(object):
             lines=False,  # plot x=0 and y=0 lines
             xlabel=None,  # specify label for x-axis
             ylabel=None,  # specify label for y-axis
-            legend = False,  # specify legend
+            legend=False,  # specify legend
             xmin=None, xmax=None, ymin=None, ymax=None, # specify ranges for plot
-            title=None # specify title for the plot
+            title=None, # specify title for the plot
+            legend_loc='upper center', # default legend location
+            **kwargs
     ):
 
         if x_col is not None and y_col is not None:
             data_xmin, data_xmax, x_ranges, data_ymin, data_ymax, y_ranges \
                 = self.get_data_ranges(x_data=self.data[x_col], y_data=self.data[y_col])
 
-            self.set_data_ranges(
+            self._set_data_ranges(
+                plt=plt,
                 xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax,
-                data_xmin=data_xmin, data_xmax=data_xmax, data_ymin=data_ymin, data_ymax=data_ymax)
+                data_xmin=data_xmin, data_xmax=data_xmax, data_ymin=data_ymin, data_ymax=data_ymax, **kwargs)
 
         if lines:
             # plot lines to split the quadrants
@@ -232,7 +236,7 @@ class Plotter(object):
         elif ylabel is None and y_col is not None:
             plt.ylabel(f'{self.labels[y_col].replace("_", " ")}', fontsize=self.label_fontsize)
         if legend:
-            plt.legend(loc='upper center', ncol=self.num_data)
+            plt.legend(loc=legend_loc, ncol=self.num_data)
 
         # set up title
         if title is not None:

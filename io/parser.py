@@ -66,8 +66,11 @@ class FileReader(object):
         return self.num_columns - 1
 
     def read_labels(self):
-        labels = self._get_headings()
-        return labels
+        try:
+            labels = self._get_headings()
+            return labels
+        except TypeError:
+            return None
 
     def read_datapoints(self):
         data = [[] for i in range(self.num_columns)]  # list of lists with each list a column data

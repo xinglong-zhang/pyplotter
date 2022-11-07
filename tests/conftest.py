@@ -24,3 +24,8 @@ def two_cols_path(test_data_path):
 def five_cols_path(test_data_path):
     five_cols_path = os.path.join(test_data_path, 'five_cols_plot.txt')
     return five_cols_path
+
+@pytest.fixture
+def data_with_error_bars(test_data_path):
+    data_with_error_bars = os.path.join(test_data_path, 'all_errors_smallest_trainset.txt')
+    return data_with_error_bars
