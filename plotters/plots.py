@@ -208,6 +208,11 @@ class Plotter(object):
                 xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax,
                 data_xmin=data_xmin, data_xmax=data_xmax, data_ymin=data_ymin, data_ymax=data_ymax, **kwargs)
 
+        if xmin is not None or xmax is not None or ymin is not None or ymax is not None:
+            self._set_data_ranges(
+                plt=plt,
+                xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, **kwargs)
+
         if lines:
             # plot lines to split the quadrants
             plt.axhline(y=0, color='r', linestyle='-')
