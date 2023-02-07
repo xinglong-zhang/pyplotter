@@ -241,7 +241,7 @@ class Plotter(object):
         elif ylabel is None and y_col is not None:
             plt.ylabel(f'{self.labels[y_col].replace("_", " ")}', fontsize=self.label_fontsize)
         if legend:
-            plt.legend(loc=legend_loc, ncol=self.num_data)
+            plt.legend(self.labels[1:], loc=legend_loc, ncol=self.num_data)
 
         # set up title
         if title is not None:

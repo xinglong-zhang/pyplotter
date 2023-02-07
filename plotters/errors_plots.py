@@ -1,8 +1,8 @@
 from pyplotter.utils.utils import colors
 import logging
 logger = logging.getLogger(__name__)
-
 from pyplotter.plotters.plots import Plotter
+
 
 class ErrorPlotter(Plotter):
     def __init__(self, **kwargs):

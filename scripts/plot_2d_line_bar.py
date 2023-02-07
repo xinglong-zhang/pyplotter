@@ -7,7 +7,7 @@ from pyplotter.plotters.plots import Plotter
 @click.option('-f', '--filename', type=str)
 @click.option('-s', '--save-folder', type=str)
 @click.option('-w', '--write-filename', type=str, help='Filename of plot to be saved.')
-@click.option('-m', '--plot-mode', type=str, help='Options: line, scatter, bar, grouped_bar')
+@click.option('-m', '--plot-mode', type=str, help='Options: line, scatter, bar, grouped_bar, grouped_line')
 @click.option('-xc', '--x-col', type=int, default=0, help='x-column to plot.')
 @click.option('-yc', '--y-col', type=int, default=1, help='y-column to plot.')
 @click.option('-b', '--bar-width', default=0.4, help='Width of bar in bar plot.')
@@ -20,7 +20,7 @@ from pyplotter.plotters.plots import Plotter
 @click.option('-l', '--lines', type=bool, default=False, help='Plot axes lines')
 @click.option('-xl', '--xlabel', default=None, help='Label for x-axis.')
 @click.option('-yl', '--ylabel', default=None, help='Label for y-axis.')
-@click.option('-lg', '--legend', type=bool, default=False, help='Plot axes lines')
+@click.option('-lg/', '--legend/--no-legend', type=bool, default=False, help='Plot axes lines')
 @click.option('-t', '--title', type=str, default=None)
 @click.option('-p', '--plot-width', type=int, default=10, help='Width of the plot.')
 @click.option('-h', '--plot-height', type=int, default=7, help='Height of the plot.')
@@ -31,6 +31,11 @@ def entry_point(filename, save_folder, write_filename, plot_mode, x_col, y_col,
                 bar_width, grouped_line_cols_to_plot, grouped_bar_cols_to_plot,
                 xmin, xmax, ymin, ymax, lines, xlabel, ylabel, legend, title,
                 plot_width, plot_height, label_fontsize, save_format):
+    """
+    Example usage:
+    `plot_2d_line_bar.py -f  train_centered_bond_distances.txt -m grouped_line -lc 1: -lg -yl "bond distance\AA" -w train_centered_bond_distances_lines`
+    `plot_2d_line_bar.py -f md_centered_bond_distances.txt -m line -xc 0 -yc 1 -w md_centered_bond_distances_9_22`
+    """
     create_logger()
     plotter = Plotter(
         filename=filename, save_folder=save_folder, write_filename=write_filename,
