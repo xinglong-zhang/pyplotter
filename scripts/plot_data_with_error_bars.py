@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 import click
+import logging
+logger = logging.getLogger(__name__)
 from pyatoms.utils.logging import create_logger
 from pyplotter.plotters.errors_plots import ErrorPlotter
 

@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 import click
+import logging
+logger = logging.getLogger(__name__)
 from pyatoms.analysis.dias import GaussianDIASLogFolder
 from pyplotter.io.parser import FileReader
 from pyatoms.utils.utils import spline_data
