@@ -114,13 +114,15 @@ class DIASPlotter(object):
 
 
 @click.command()
-@click.option('-f', '--logfiles', type=str, multiple=True, help='Filenames to plot. Accepts multiple values.')
+@click.option('-f', '--filenames', type=str, multiple=True, help='Filenames to plot. Accepts multiple values.')
 @click.option('-l', '--new-length', type=int, default=1000, help='Number of spline points.')
 @click.option('-k', '--k-value', type=int, default=3, help='Degree of the smoothing spline. Must be 1 <= k <= 5. k = 3 is a cubic spline. Default is 3.')
 @click.option('-r', '--reversed/--no-reversed', type=bool, default=True, help='Option to reverse reaction coordinates.')
 @click.option('-x', '--x-scale', type=float, default=0.05, help='Scale along xlim.')
 @click.option('-y', '--y-scale', type=float, default=3, help='Scale along y-lim.')
 def entry_point(filenames, new_length, k_value, reversed, x_scale, y_scale):
+    """ Example usage:
+    dias_plot_all_data.py -f udc3_mCF3_c8_ts_ircr_dias_dias_data.txt -f udc3_oCF3_c6_ts_ircf_dias_dias_data.txt -y 0.05"""
     dias_plotter = DIASPlotter(filenames)
     dias_plotter.plot_all(new_length=new_length, k=k_value, reversed=reversed, x_scale=x_scale, y_scale=y_scale)
 
