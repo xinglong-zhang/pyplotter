@@ -31,7 +31,7 @@ class Plotter(object):
         self.num_cols = self.parser.num_columns
         self.num_data = self.parser.num_data
         self.labels = self.parser.labels
-        self.data = self.parser.read_datapoints()
+        self.data = self.parser.datapoints
         self.plot_width = plot_width
         self.plot_height = plot_height
         self.label_fontsize = label_fontsize
