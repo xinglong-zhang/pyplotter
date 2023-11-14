@@ -30,7 +30,7 @@ class Plotter(object):
         self.basename = self.parser.basename
         self.num_cols = self.parser.num_columns
         self.num_data = self.parser.num_data
-        self.labels = self.parser.read_labels()
+        self.labels = self.parser.labels
         self.data = self.parser.read_datapoints()
         self.plot_width = plot_width
         self.plot_height = plot_height

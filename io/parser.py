@@ -29,25 +29,6 @@ class DataParser(object):
                     contents.append(line)
         return contents
 
-    def _get_headings(self):
-        headings = []
-        for line in self.file_data:
-            if line.startswith('#'):
-                # heading line is present
-                line_element = line.split('#')[-1].strip().split()
-            if line.startswith('#') and len(line_element) != self.num_columns:
-                pass
-            elif line.startswith('#') and len(line_element) == self.num_columns:
-                for i in line_element:
-                    headings.append(i)
-                return headings
-        else:
-            # when no heading is supplied
-            for i in self.num_columns:
-                default_heading = f'column_{i+1}'
-                headings.append(default_heading)
-            return headings
-
     @property
     def basename(self):
         return self.filename.split('/')[-1].split('.')[0]
@@ -64,20 +45,41 @@ class DataParser(object):
 
     @property
     def num_data(self):
+        """ Get number of data to plot in the y-axis."""
         return self.num_columns - 1
 
-    def read_labels(self):
-        try:
-            labels = self._get_headings()
-            return labels
-        except TypeError:
-            return None
+    def _get_headings(self):
+        headings = []
+        for line in self.file_data:
+            if line.startswith('#'):
+                # heading line is present
+                line_element = line.split('#')[-1].strip().split()
+                if len(line_element) == self.num_columns:
+                    # number of headings same as number of columns: x-axis has heading too
+                    for i in line_element:
+                        headings.append(i)
+                    return headings
+                elif len(line_element) == self.num_data:
+                    # number of headings same as number of data: x-axis has no heading
+                    headings.append('X_label')
+                    for i in line_element:
+                        headings.append(i)
+            else:
+                # when no heading is supplied
+                for i in range(self.num_columns):
+                    default_heading = f'column_{i+1}'
+                    headings.append(default_heading)
+        return headings
+
+    @property
+    def labels(self):
+        return self._get_headings()
 
     def read_datapoints(self):
         data = [[] for i in range(self.num_columns)]  # list of lists with each list a column data
         for line in self.file_data:
             if '#' in line:
-                line_elem = line.split('#')[0].strip().split()
+                continue
             else:
                 line_elem = line.split()
             for j in range(self.num_columns):
