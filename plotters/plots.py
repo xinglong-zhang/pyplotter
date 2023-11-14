@@ -2,7 +2,7 @@ import os
 import numpy as np
 from pymatgen.util.plotting import pretty_plot, pretty_plot_two_axis, pretty_polyfit_plot
 from mpl_toolkits import mplot3d
-from pyplotter.io.parser import FileReader
+from pyplotter.io.parser import DataParser
 from pyatoms.utils.utils import lazy_property
 from ase.io import string2index
 
@@ -26,7 +26,7 @@ class Plotter(object):
         self.write_filename = write_filename
         if self.save_folder is None:
             self.save_folder = '.'
-        self.parser = FileReader(filename=self.filepath)
+        self.parser = DataParser(filename=self.filepath)
         self.basename = self.parser.basename
         self.num_cols = self.parser.num_columns
         self.num_data = self.parser.num_data
@@ -50,7 +50,8 @@ class Plotter(object):
             **kwargs  # kwargs to set plot parameters in self._set_plot_2d(plt=plt, **kwargs)
     ):
         assert plot_mode is not None, f'Plot mode is required!\n' \
-                                      f'Available plot modes are "scatter", "line", "grouped_line", "bar", "grouped_bar".'
+                                      f'Available plot modes are ' \
+                                      f'"scatter", "line", "grouped_line", "bar", "grouped_bar".'
 
         # get 2D data for plotting
         assert x_col is not None and y_col is not None, f'X and Y columns (0-indexed) need to be specified for plotting.'

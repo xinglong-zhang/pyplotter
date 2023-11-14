@@ -3,7 +3,7 @@ import click
 import logging
 logger = logging.getLogger(__name__)
 from pyatoms.analysis.dias import GaussianDIASLogFolder
-from pyplotter.io.parser import FileReader
+from pyplotter.io.parser import DataParser
 from pyatoms.utils.utils import spline_data
 from matplotlib import pyplot as plt
 
@@ -19,7 +19,7 @@ class DIASPlotter(object):
     def all_data(self):
         all_data = []
         for i in range(self.num_files):
-            parser = FileReader(filename=self.files[i])
+            parser = DataParser(filename=self.files[i])
             data = parser.read_datapoints()
             # print(f'data: {data}')  # [[...], [...], [...], [...]] # four columns of data
             all_data.append(data)
@@ -29,7 +29,7 @@ class DIASPlotter(object):
     @property
     def all_labels(self):
         all_labels = []
-        parser = FileReader(filename=self.files[0]) # sane labels for all files
+        parser = DataParser(filename=self.files[0]) # sane labels for all files
         labels = parser.read_labels()
         for label in labels:
             if '_' in label:
