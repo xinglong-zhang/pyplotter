@@ -75,7 +75,11 @@ class DataParser(object):
     def labels(self):
         return self._get_headings()
 
-    def read_datapoints(self):
+    @property
+    def datapoints(self):
+        return self._read_datapoints()
+
+    def _read_datapoints(self):
         data = [[] for i in range(self.num_columns)]  # list of lists with each list a column data
         for line in self.file_data:
             if '#' in line:
@@ -87,5 +91,9 @@ class DataParser(object):
                     data[j].append(float(line_elem[j]))
                 except ValueError:
                     data[j].append(line_elem[j])
-        print(f'Data to be plotted: {data}')
         return data
+
+    @property
+    def x_data(self):
+        """Return x-data as a list."""
+        return self.datapoints[0]
