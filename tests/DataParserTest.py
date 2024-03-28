@@ -1,6 +1,4 @@
 from pyplotter.io.parser import DataParser
-from pyplotter.plotters.plots import Plotter
-from pyplotter.plotters.errors_plots import ErrorPlotter
 import logging
 from pyatoms.utils.logging import create_logger
 logger = logging.getLogger(__name__)

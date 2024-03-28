@@ -2,7 +2,6 @@ import logging
 logger = logging.getLogger(__name__)
 
 from pyplotter.plotters.plots import Plotter
-from matplotlib.ticker import MultipleLocator
 
 class JobRuntimePlotter(Plotter):
     def __init__(self, filename, **kwargs):

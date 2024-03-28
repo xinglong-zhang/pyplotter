@@ -1,4 +1,3 @@
-import os
 from pyatoms.utils.utils import lazy_property
 from pyatoms.utils.logging import create_logger
 logger = create_logger()

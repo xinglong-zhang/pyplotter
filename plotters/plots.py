@@ -1,9 +1,7 @@
 import os
 import numpy as np
-from pymatgen.util.plotting import pretty_plot, pretty_plot_two_axis, pretty_polyfit_plot
-from mpl_toolkits import mplot3d
+from pymatgen.util.plotting import pretty_plot
 from pyplotter.io.parser import DataParser
-from pyatoms.utils.utils import lazy_property
 from ase.io import string2index
 
 import logging
@@ -17,7 +15,7 @@ class Plotter(object):
             write_filename=None,  # filename to save plot
             plot_width=10,  # default plot width
             plot_height=7,   # default plot height
-            label_fontsize=16,  # fontsize of the axes labels
+            label_fontsize=10,  # fontsize of the axes labels
             save_format='pdf',  # format of the plot to be saved
     ):
         self.filepath = os.path.abspath(filename)
@@ -44,17 +42,17 @@ class Plotter(object):
             self,
             plot_mode,
             x_col=0, y_col=1,  # cols
-            bar_width=0.4,  # default width for bar plots
+            bar_width=2.0,  # default width for bar plots
             grouped_line_cols_to_plot=None,  # specify which columns to plot for multiple lines
             grouped_bar_cols_to_plot=None,  # specify which columns to plot
             **kwargs  # kwargs to set plot parameters in self._set_plot_2d(plt=plt, **kwargs)
     ):
-        assert plot_mode is not None, f'Plot mode is required!\n' \
-                                      f'Available plot modes are ' \
-                                      f'"scatter", "line", "grouped_line", "bar", "grouped_bar".'
+        assert plot_mode is not None, 'Plot mode is required!\n' \
+                                      'Available plot modes are ' \
+                                      '"scatter", "line", "grouped_line", "bar", "grouped_bar".'
 
         # get 2D data for plotting
-        assert x_col is not None and y_col is not None, f'X and Y columns (0-indexed) need to be specified for plotting.'
+        assert x_col is not None and y_col is not None, 'X and Y columns (0-indexed) need to be specified for plotting.'
         x_data = self.data[x_col]
         y_data = self.data[y_col]
         assert len(x_data) == len(y_data), f'Lens of data for plotting: {x_data} and {y_data} are not the same!'
@@ -105,8 +103,8 @@ class Plotter(object):
         elif plot_mode == 'grouped_bar':
             index = np.arange(1, len(x_data)+1) * self.num_cols
             x_data_labels = [str(i) for i in x_data]
+            logger.info(f'x-data labels: {x_data_labels}')
             plt.xticks(index, x_data_labels)
-            x_data = np.array(x_data)
             bar_width = bar_width + self.num_cols * 0.1
             if grouped_bar_cols_to_plot is not None:
                 if isinstance(grouped_bar_cols_to_plot, list):
@@ -129,7 +127,7 @@ class Plotter(object):
             else:
                 plot_range_list = range(1, self.num_cols)  # plot all columns from 1 to the end (0-indexed)
 
-            basename = self.basename + '_' + str(len(plot_range_list)) + '_cols'
+            # basename = self.basename + '_' + str(len(plot_range_list)) + '_cols'
             for i in plot_range_list:
                 offset = i - self.num_cols//2
                 offset_width = offset * bar_width
@@ -157,16 +155,17 @@ class Plotter(object):
         # plt.axes().yaxis.set_minor_locator(MultipleLocator(5))
         # return ax
 
-    def get_data_ranges(self, x_data, y_data):
-        # get data ranges
-        data_xmin = min(x_data)
-        data_xmax = max(x_data)
-        x_ranges = data_xmax - data_xmin
-
-        data_ymin = min(y_data)
-        data_ymax = max(y_data)
-        y_ranges = data_ymax - data_ymin
-        return data_xmin, data_xmax, x_ranges, data_ymin, data_ymax, y_ranges
+    def get_data_range(self, data):
+        try:
+            # get data ranges
+            data_min = min(data)
+            data_max = max(data)
+            data_range = data_max - data_min
+        except TypeError:
+            data_min = 0
+            data_max = len(data)
+            data_range = data_max - data_min
+        return data_range, data_max, data_min
 
     def _set_data_ranges(self, plt, xmin=None, xmax=None, ymin=None, ymax=None,
                         data_xmin=None, data_xmax=None, data_ymin=None, data_ymax=None):
@@ -201,8 +200,8 @@ class Plotter(object):
     ):
 
         if x_col is not None and y_col is not None:
-            data_xmin, data_xmax, x_ranges, data_ymin, data_ymax, y_ranges \
-                = self.get_data_ranges(x_data=self.data[x_col], y_data=self.data[y_col])
+            data_xrange, data_xmax, data_xmin = self.get_data_range(data=self.data[x_col])
+            data_yrange, data_ymax, data_ymin = self.get_data_range(data=self.data[y_col])
 
             self._set_data_ranges(
                 plt=plt,
@@ -278,12 +277,12 @@ class Plotter(object):
             bar_width=0.4,  # default width for bar plots
             **kwargs  # kwargs to set plot parameters in self._set_plot_2d(plt=plt, **kwargs)
     ):
-        assert plot_mode is not None, f'Plot mode is required!\n' \
-                                      f'Available plot modes are "scatter", "line", "bar".'
+        assert plot_mode is not None, 'Plot mode is required!\n' \
+                                      'Available plot modes are "scatter", "line", "bar".'
 
         # get 2D data for plotting
         assert x_col is not None and y_col is not None and z_col is not None, \
-            f'X and Y and Z columns (0-indexed) need to be specified for plotting.'
+            'X and Y and Z columns (0-indexed) need to be specified for plotting.'
         x_data = self.data[x_col]
         y_data = self.data[y_col]
         z_data = self.data[z_col]
