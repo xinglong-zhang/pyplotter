@@ -48,5 +48,11 @@ class TestPlotterTest(object):
 
     def test_plot_uvvis_data(self, tmpdir, uvvis_data):
         plotter = UVVisPlotter(filename=uvvis_data, save_folder=tmpdir)
-        plotter.plot_scatter_with_lines_and_error_bars(data_labels_list=['MTP', 'Schnet', 'ANI'])
+        plotter.plot_wavelengths(xlabel='wavelength / nm', ylabel="Molar absorptivity / L mol$^{-1}$ cm$^{-1}$")
+        # print(plotter.data[0])
+        # print()
+        # print(plotter.data[1])
+        # print()
+        print(plotter.data[2])
+        # plotter.plot_scatter_with_lines_and_error_bars(data_labels_list=['MTP', 'Schnet', 'ANI'])
 

@@ -7,17 +7,10 @@ class UVVisPlotter(Plotter):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def plot_energy_scan(self, first_point_ref=False, inverse_x_axis=False, **kwargs):
+    def plot_wavelengths(self, first_point_ref=False, inverse_x_axis=False, **kwargs):
         plt = self.plt
         x_data = self.data[0]
         y_data = self.data[1]
-        # convert to relative energies in kcal/mol
-        ha_to_kcal_per_mol = 627.509474
-        if not first_point_ref:
-            min_energy = min(y_data)
-        else:
-            min_energy = y_data[0]
-        y_data = [(energy - min_energy) * ha_to_kcal_per_mol for energy in y_data]
 
         f = plt.figure(figsize=(10, 4))
         ax = f.add_subplot(111)
@@ -34,7 +27,7 @@ class UVVisPlotter(Plotter):
         if inverse_x_axis:
             ax.invert_xaxis()
 
-        plt.plot(x_data, y_data, 'o-')
+        plt.plot(x_data, y_data, 'b-')
         self._set_plot_2d(plt=plt, x_col=0, y_col=1, **kwargs)
         self._save_plot(plt=plt, folder=self.save_folder)
         self._show_plot(plt=plt)
