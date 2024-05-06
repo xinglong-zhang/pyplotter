@@ -1,3 +1,5 @@
+import sys
+import numpy as np
 from cycler import cycler
 import logging
 from functools import update_wrapper
@@ -15,8 +17,34 @@ linewidth_cycler = cycler(lw=[1, 2, 3, 4])
 colors = ['r', 'g', 'b', 'y', 'c', 'm', 'y', 'k']
 
 
-def create_logger():
-    logger = logging.getLogger(__name__)
+def create_logger(debug=True, stream=True, disable=None):
+    if disable is None:
+        disable = []
+
+    for module in disable:
+        logging.getLogger(module).disabled = True
+
+    logging.getLogger('matplotlib').setLevel(logging.WARNING)
+    logger = logging.getLogger()
+
+    # Stream
+    level = logging.INFO
+    if debug:
+        level = logging.DEBUG
+
+    logger.setLevel(level)
+    logger.handlers = []
+
+    # Stream errors always
+    err_stream_handler = logging.StreamHandler(stream=sys.stderr)
+    err_stream_handler.setLevel(logging.ERROR)
+    logger.addHandler(err_stream_handler)
+
+    # Stream other info only if required
+    if stream:
+        stream_handler = logging.StreamHandler(stream=sys.stdout)
+        logger.addHandler(stream_handler)
+
 
 def is_float(number):
     try:

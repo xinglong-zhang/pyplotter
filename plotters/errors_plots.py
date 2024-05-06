@@ -1,6 +1,4 @@
 from pyplotter.utils.utils import colors
-import logging
-logger = logging.getLogger(__name__)
 from pyplotter.plotters.plots import Plotter
 
 

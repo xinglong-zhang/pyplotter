@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 import click
-import logging
-logger = logging.getLogger(__name__)
 from pyplotter.utils.utils import create_logger
 from pyplotter.plotters.job_runtime_plots import JobRuntimePlotter
 

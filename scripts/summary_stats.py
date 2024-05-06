@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 import click
 import statistics
+from pyplotter.plotters.plots import Plotter
 import logging
 logger = logging.getLogger(__name__)
-from pyplotter.utils.utils import create_logger
-from pyplotter.plotters.plots import Plotter
 
 @click.command()
 @click.option('-f', '--filename', type=str)
@@ -14,7 +13,6 @@ def entry_point(filename, column):
     Example usage:
     `summary_stats.py -f  COLVAR -c 1`
     """
-    create_logger()
     plotter = Plotter(filename=filename)
 
     data = plotter.data

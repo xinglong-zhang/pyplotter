@@ -1,6 +1,3 @@
-import logging
-logger = logging.getLogger(__name__)
-
 from pyplotter.plotters.plots import Plotter
 
 class JobRuntimePlotter(Plotter):
@@ -51,7 +48,8 @@ class JobRuntimePlotter(Plotter):
                 if filter_string_for_plotting is None:
                     raise KeyError(f'string needed for plotting. Available ones are: {unique_filter_keys}')
 
-                x_data = []; y_data = []
+                x_data = []
+                y_data = []
                 for i in range(len(self.n_procs)):
                     if filter_string_for_plotting in unique_filter_keys:
                         if filter_keys[i] == filter_string_for_plotting:
