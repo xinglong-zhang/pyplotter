@@ -46,7 +46,6 @@ class UVVisPlotter(Plotter):
         if self.os_filter is not None:
             filtered_values = [(x, y) for x, y in zip(wavelengths, oscillator_strength) if y >= self.os_filter]
             wavelengths, oscillator_strength = zip(*filtered_values)
-            print(filtered_values)
 
         plt.plot(wavelengths, oscillator_strength,linestyle='None', color='k')
         for x, y in zip(wavelengths, oscillator_strength):
