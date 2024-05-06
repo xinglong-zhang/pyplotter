@@ -3,7 +3,7 @@ import click
 import statistics
 import logging
 logger = logging.getLogger(__name__)
-from pyatoms.utils.logging import create_logger
+from pyplotter.utils.utils import create_logger
 from pyplotter.plotters.plots import Plotter
 
 @click.command()

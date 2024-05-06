@@ -5,7 +5,7 @@ logger = logging.getLogger(__name__)
 
 from pyplotter.plotters.plots import Plotter
 from pyplotter.io.parser import DataParser
-from pyatoms.utils.utils import spline_data
+from pyplotter.utils.utils import spline_data
 from matplotlib import pyplot as plt
 
 class NormBarPlotter(Plotter):

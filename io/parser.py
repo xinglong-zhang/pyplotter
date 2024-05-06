@@ -1,6 +1,6 @@
 from pyplotter.utils.utils import is_float
-from pyatoms.utils.utils import lazy_property
-from pyatoms.utils.logging import create_logger
+from pyplotter.utils.utils import LazyProperty
+from pyplotter.utils.utils import create_logger
 logger = create_logger()
 
 
@@ -11,7 +11,7 @@ class DataParser(object):
     def __init__(self, filename):
         self.filename = filename
 
-    @lazy_property
+    @LazyProperty
     def file_data(self):
         """ Gets the data from file and return a list of lines of the data. Includes the header line that starts with #
         Data structure of the file to be plotted:
@@ -99,10 +99,12 @@ class DataParser(object):
         return self.datapoints[0]
 
     def _read_peaks(self):
-        """ Private method to read UV-Vis peaks information"""
+        """ Private method to read UV-Vis peaks information.
+        Note: Gaussian data saved seems to have it wrong, X axis is wavelengths,
+        Y is oscillator strengths and Y2 absorptivity."""
         wavelengths = []
-        absorptivity = []
         oscillator_strength = []
+        absorptivity = []
         lines = self.file_data
         in_peak_info_section = False
         for line in lines:
@@ -117,7 +119,7 @@ class DataParser(object):
                     y = float(parts[2])
                     y2 = float(parts[3])
                     wavelengths.append(x)
-                    absorptivity.append(y)
-                    oscillator_strength.append(y2)
+                    oscillator_strength.append(y)
+                    absorptivity.append(y2)
 
-        return wavelengths, absorptivity, oscillator_strength
+        return wavelengths, oscillator_strength, absorptivity

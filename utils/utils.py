@@ -1,6 +1,6 @@
 from cycler import cycler
-
-
+import logging
+from functools import update_wrapper
 
 default_cycler = (cycler(color=['r', 'g', 'b', 'y']) +
                   cycler(linestyle=['-', '--', ':', '-.']))
@@ -15,9 +15,57 @@ linewidth_cycler = cycler(lw=[1, 2, 3, 4])
 colors = ['r', 'g', 'b', 'y', 'c', 'm', 'y', 'k']
 
 
+def create_logger():
+    logger = logging.getLogger(__name__)
+
 def is_float(number):
     try:
         float(number)
         return True
     except ValueError:
         return False
+
+def spline_data(x, y, new_length=1000, k=3):
+    from scipy.interpolate import UnivariateSpline
+
+    # Combine lists into list of tuples
+    points = zip(x, y, strict=False)
+
+    # Sort list of tuples by x-value
+    points = sorted(points, key=lambda point: point[0])
+
+    # Split list of tuples into two list of x values any y values
+    x1, y1 = zip(*points, strict=False)
+    new_x = np.linspace(min(x1), max(x1), new_length)
+    new_y = UnivariateSpline(x1, y1, k=k)(new_x)
+    return new_x, new_y
+
+class LazyProperty(property):
+    """ Lazy Property class from https://github.com/jackmaney/lazy-property
+    """
+    def __init__(self, method, fget=None, fset=None, fdel=None, doc=None):
+
+        self.method = method
+        self.cache_name = "_{}".format(self.method.__name__)
+
+        doc = doc or method.__doc__
+        super(LazyProperty, self).__init__(fget=fget, fset=fset, fdel=fdel, doc=doc)
+
+        update_wrapper(self, method)
+
+    def __get__(self, instance, owner):
+
+        if instance is None:
+            return self
+
+        if hasattr(instance, self.cache_name):
+            result = getattr(instance, self.cache_name)
+        else:
+            if self.fget is not None:
+                result = self.fget(instance)
+            else:
+                result = self.method(instance)
+
+            setattr(instance, self.cache_name, result)
+
+        return result
