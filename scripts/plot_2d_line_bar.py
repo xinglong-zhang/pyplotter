@@ -10,6 +10,9 @@ from pyplotter.plotters.plots import Plotter
 @click.option('-s', '--save-folder', type=str)
 @click.option('-w', '--write-filename', type=str, help='Filename of plot to be saved.')
 @click.option('-m', '--plot-mode', type=str, help='Options: line, scatter, bar, grouped_bar, grouped_line')
+@click.option('-d', '--degree-of-fit', type=int, help='Degree of fit for scatter plot')
+@click.option('-xo', '--x-offset', type=int, default=0, help='x-offset to label equation position.')
+@click.option('-yo', '--y-offset', type=int, default=0, help='y-offset to label equation position.')
 @click.option('-xc', '--x-col', type=int, default=0, help='x-column to plot.')
 @click.option('-yc', '--y-col', type=int, default=1, help='y-column to plot.')
 @click.option('-b', '--bar-width', default=0.4, help='Width of bar in bar plot.')
@@ -28,11 +31,12 @@ from pyplotter.plotters.plots import Plotter
 @click.option('-h', '--plot-height', type=int, default=7, help='Height of the plot.')
 @click.option('-lf', '--label-fontsize', type=int, default=16, help='Fontsize of the axes labels.')
 @click.option('-sf', '--save-format', type=str, default='pdf', help='Format of plot to be saved.')
+@click.option('-g/', '--grid/--no-grid', type=bool, default=False, help='To turn on grid or off.')
 
-def entry_point(filename, save_folder, write_filename, plot_mode, x_col, y_col,
-                bar_width, grouped_line_cols_to_plot, grouped_bar_cols_to_plot,
+def entry_point(filename, save_folder, write_filename, plot_mode, degree_of_fit, x_offset, y_offset,
+                x_col, y_col, bar_width, grouped_line_cols_to_plot, grouped_bar_cols_to_plot,
                 xmin, xmax, ymin, ymax, lines, xlabel, ylabel, legend, title,
-                plot_width, plot_height, label_fontsize, save_format):
+                plot_width, plot_height, label_fontsize, save_format, grid):
     """
     Example usage:
     `plot_2d_line_bar.py -f  train_centered_bond_distances.txt -m grouped_line -lc 1: -lg -yl "bond distance\AA" -w train_centered_bond_distances_lines`
@@ -42,10 +46,11 @@ def entry_point(filename, save_folder, write_filename, plot_mode, x_col, y_col,
     plotter = Plotter(
         filename=filename, save_folder=save_folder, write_filename=write_filename,
         plot_width=plot_width, plot_height=plot_height, label_fontsize=label_fontsize,
-        save_format=save_format
+        save_format=save_format, grid_on=grid
     )
     plotter.plot_2d_line_scatter_bars(
-        plot_mode=plot_mode, x_col=x_col, y_col=y_col, bar_width=bar_width,
+        plot_mode=plot_mode, fit_degree=degree_of_fit, x_fit_offset=x_offset, y_fit_offset=y_offset,
+        x_col=x_col, y_col=y_col, bar_width=bar_width,
         grouped_line_cols_to_plot=grouped_line_cols_to_plot, grouped_bar_cols_to_plot=grouped_bar_cols_to_plot,
         xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, lines=lines, xlabel=xlabel, ylabel=ylabel, legend=legend, title=title
     )

@@ -2,34 +2,35 @@
 import click
 import logging
 logger = logging.getLogger(__name__)
+
+from pyplotter.plotters.plots import Plotter
 from pyplotter.io.parser import DataParser
 from pyatoms.utils.utils import spline_data
 from matplotlib import pyplot as plt
 
-class DIASPlotter(object):
+class NormBarPlotter(Plotter):
     """
-    Reads dias_data.txt generated from  pyatoms.analysis.dias.GaussianDIASLogFolder
+    Reads energy.txt and plot normalised bars
     """
-    def __init__(self, *args):
-        self.files = args[0]
-        self.num_files = len(self.files)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
     @property
     def all_data(self):
         all_data = []
         for i in range(self.num_files):
             parser = DataParser(filename=self.files[i])
-            data = parser.datapoints
+            data = parser.read_datapoints()
             # print(f'data: {data}')  # [[...], [...], [...], [...]] # four columns of data
             all_data.append(data)
-        # print(all_data)
+        print(all_data)
         return all_data
 
     @property
     def all_labels(self):
         all_labels = []
         parser = DataParser(filename=self.files[0]) # sane labels for all files
-        labels = parser.labels
+        labels = parser.read_labels()
         for label in labels:
             if '_' in label:
                 label = label.replace('_', ' ')
@@ -38,15 +39,12 @@ class DIASPlotter(object):
 
     def plot_all(self, new_length=1000, k=3, reversed=True, x_scale=0.05, y_scale=3):
         colors = ['k', 'b', '#7922BA']
-        markers = ['*', 'o', 's']
-        marker_colors = ['blue', 'green', 'red']
+        markers = ['o', '*', 's']
 
-        fig = plt.figure(figsize=(10, 6))
+        fig = plt.figure()
         plt.rc('font', family='Arial')
         axis_font = {'fontname': 'Arial', 'weight': 'bold', 'size': '22'}
         plt.rc('axes', linewidth=2)
-
-        legend_added = False
 
         for i in range(self.num_files):
             # data checked all correct
@@ -56,16 +54,9 @@ class DIASPlotter(object):
             interaction_e = self.all_data[i][3]
 
             # raw data points
-            plt.plot(x_rc, total_e, color=colors[0], marker=markers[i], markerfacecolor=marker_colors[i],
-                     markeredgecolor=marker_colors[i], linestyle='')
-            plt.plot(x_rc, strain_e, color=colors[1], marker=markers[i], markerfacecolor=marker_colors[i],
-                     markeredgecolor=marker_colors[i], linestyle='')
-            plt.plot(x_rc, interaction_e, color=colors[2], marker=markers[i], markerfacecolor=marker_colors[i],
-                     markeredgecolor=marker_colors[i], linestyle='')
-
-            if not legend_added:
-                plt.legend(loc='upper center', ncols=3)
-                legend_added = True
+            plt.plot(x_rc, total_e, color=colors[0], marker=markers[i], linestyle='')
+            plt.plot(x_rc, strain_e, color=colors[1], marker=markers[i], linestyle='')
+            plt.plot(x_rc, interaction_e, color=colors[2], marker=markers[i], linestyle='')
 
             # interpolate data
             x1, y1_tot = spline_data(x_rc, total_e, new_length=new_length, k=k)
@@ -131,13 +122,9 @@ class DIASPlotter(object):
 @click.option('-y', '--y-scale', type=float, default=3, help='Scale along y-lim.')
 def entry_point(filenames, new_length, k_value, reversed, x_scale, y_scale):
     """ Example usage:
-    `dias_plot_all_data.py -f udc3_mCF3_c8_ts_ircr_dias_dias_data.txt -f udc3_oCF3_c6_ts_ircf_dias_dias_data.txt -y 0.05`
-    `dias_plot_all_data.py -f udc3_mCF3_c8_ts_ircr_dias_gaussian_dias_zero_ref_data.txt
-    -f udc3_mCF3_c8_ts_ircr_dias_orca_dias_zero_ref_data.txt -y 0.1`
-    """
+    dias_plot_all_data.py -f udc3_mCF3_c8_ts_ircr_dias_dias_data.txt -f udc3_oCF3_c6_ts_ircf_dias_dias_data.txt -y 0.05"""
     dias_plotter = DIASPlotter(filenames)
     dias_plotter.plot_all(new_length=new_length, k=k_value, reversed=reversed, x_scale=x_scale, y_scale=y_scale)
-
 
 if __name__ == '__main__':
     entry_point()

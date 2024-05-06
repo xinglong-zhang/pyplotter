@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import math
 
 def pretty_3d_plot(width=8, height=None, plt=None, dpi=None, color_cycle=("qualitative", "Set1_9")):
