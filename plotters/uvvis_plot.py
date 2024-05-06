@@ -33,5 +33,9 @@ class UVVisPlotter(Plotter):
         self._show_plot(plt=plt)
         self._close_plot(plt=plt)
 
+    def read_peaks(self):
+        self.parser._read_peaks()
+
+
 
 

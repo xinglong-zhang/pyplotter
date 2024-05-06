@@ -1,3 +1,4 @@
+from pyplotter.utils.utils import is_float
 from pyatoms.utils.utils import lazy_property
 from pyatoms.utils.logging import create_logger
 logger = create_logger()
@@ -96,3 +97,27 @@ class DataParser(object):
     def x_data(self):
         """Return x-data as a list."""
         return self.datapoints[0]
+
+    def _read_peaks(self):
+        """ Private method to read UV-Vis peaks information"""
+        wavelengths = []
+        absorptivity = []
+        oscillator_strength = []
+        lines = self.file_data
+        in_peak_info_section = False
+        for line in lines:
+            if line.strip() == "# Peak information":
+                in_peak_info_section = True
+            elif line.strip() == "# Spectra":
+                break
+            elif in_peak_info_section and line.startswith("#"):
+                parts = line.split()
+                if len(parts) == 4 and all([is_float(parts[i]) for i in range(1, 4)]):
+                    x = float(parts[1])
+                    y = float(parts[2])
+                    y2 = float(parts[3])
+                    wavelengths.append(x)
+                    absorptivity.append(y)
+                    oscillator_strength.append(y2)
+
+        return wavelengths, absorptivity, oscillator_strength

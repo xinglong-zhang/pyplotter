@@ -53,6 +53,7 @@ class TestPlotterTest(object):
         # print()
         # print(plotter.data[1])
         # print()
-        print(plotter.data[2])
+        plotter.read_peaks()
+
         # plotter.plot_scatter_with_lines_and_error_bars(data_labels_list=['MTP', 'Schnet', 'ANI'])
 

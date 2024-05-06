@@ -13,3 +13,11 @@ linestyle_cycler = cycler(linestyle=['-', '--', ':', '-.'])
 linewidth_cycler = cycler(lw=[1, 2, 3, 4])
 
 colors = ['r', 'g', 'b', 'y', 'c', 'm', 'y', 'k']
+
+
+def is_float(number):
+    try:
+        float(number)
+        return True
+    except ValueError:
+        return False
