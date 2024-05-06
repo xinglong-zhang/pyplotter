@@ -34,3 +34,8 @@ def data_with_error_bars(test_data_path):
 def data_for_normalisation(test_data_path):
     data_for_normalisation = os.path.join(test_data_path, 'energy_data.txt')
     return data_for_normalisation
+
+@pytest.fixture
+def uvvis_data(test_data_path):
+    uvvis_data = os.path.join(test_data_path, 'uvvis.txt')
+    return uvvis_data

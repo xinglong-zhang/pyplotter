@@ -1,6 +1,7 @@
 import logging
 from pyplotter.plotters.plots import Plotter
 from pyplotter.plotters.errors_plots import ErrorPlotter
+from pyplotter.plotters.uvvis_plot import UVVisPlotter
 from pyatoms.utils.logging import create_logger
 logger = logging.getLogger(__name__)
 create_logger(stream=True)
@@ -43,5 +44,9 @@ class TestPlotterTest(object):
 
     def test_plot_with_error_bars(self, tmpdir, data_with_error_bars):
         plotter = ErrorPlotter(filename=data_with_error_bars, save_folder=tmpdir)
+        plotter.plot_scatter_with_lines_and_error_bars(data_labels_list=['MTP', 'Schnet', 'ANI'])
+
+    def test_plot_uvvis_data(self, tmpdir, uvvis_data):
+        plotter = UVVisPlotter(filename=uvvis_data, save_folder=tmpdir)
         plotter.plot_scatter_with_lines_and_error_bars(data_labels_list=['MTP', 'Schnet', 'ANI'])
 

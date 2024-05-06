@@ -17,6 +17,7 @@ class Plotter(object):
             plot_height=7,   # default plot height
             label_fontsize=10,  # fontsize of the axes labels
             save_format='pdf',  # format of the plot to be saved
+            grid_on=False,  # to turn on or off grid
     ):
         self.filepath = os.path.abspath(filename)
         self.filename = self.filepath.split('/')[-1]
@@ -34,6 +35,7 @@ class Plotter(object):
         self.plot_height = plot_height
         self.label_fontsize = label_fontsize
         self.save_format = save_format
+        self.grid_on = grid_on
 
         plt = pretty_plot(width=plot_width, height=plot_height)
         self.plt = plt
@@ -45,6 +47,9 @@ class Plotter(object):
             bar_width=2.0,  # default width for bar plots
             grouped_line_cols_to_plot=None,  # specify which columns to plot for multiple lines
             grouped_bar_cols_to_plot=None,  # specify which columns to plot
+            fit_degree=None,  # degree of fitting for scatter plot
+            x_fit_offset = 0,
+            y_fit_offset = 0,  # offset for equation positions
             **kwargs  # kwargs to set plot parameters in self._set_plot_2d(plt=plt, **kwargs)
     ):
         assert plot_mode is not None, 'Plot mode is required!\n' \
@@ -95,6 +100,27 @@ class Plotter(object):
 
         elif plot_mode == 'scatter':
             plt.scatter(x_data, y_data, marker='o', lw=1.5)
+            if fit_degree is not None:
+                assert isinstance(fit_degree, int), (f'Degree for fitting, {fit_degree}'
+                                                          f'is not an integer!')
+                # Fit the polynomial regression line
+                coefficients = np.polyfit(x_data, y_data, fit_degree)
+                poly_function = np.poly1d(coefficients)
+
+                # Generate the regression line
+                x_regression = np.linspace(min(x_data), max(x_data), 100)
+                y_regression = poly_function(x_regression)
+
+                # Plot the regression line
+                plt.plot(x_regression, y_regression, color='r')
+                print(fit_degree)
+
+                if fit_degree == 1:  # only add equation if linear fit
+                    equation = f'y = {coefficients[0]:.2f}x + {coefficients[1]:.2f}'
+                    r_squared = np.corrcoef(y_data, poly_function(x_data))[0, 1] ** 2
+                    plt.text((min(x_data) + max(x_data))/2 + x_fit_offset, (min(y_data) + max(y_data))/2 + y_fit_offset,
+                             f"${equation}$\n $R^2$: {r_squared:.2f}", fontsize=self.label_fontsize)
+
         elif plot_mode == 'bar':
             x_data = [int(i) for i in x_data]
             index = np.arange(len(x_data))
@@ -246,6 +272,7 @@ class Plotter(object):
         # set up title
         if title is not None:
             plt.title(f'{title}')
+        plt.grid(self.grid_on)
         return plt
 
     def _save_plot(self, plt, folder=None):
