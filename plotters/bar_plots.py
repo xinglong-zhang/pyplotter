@@ -1,11 +1,7 @@
 #!/usr/bin/env python
-import click
-import logging
-logger = logging.getLogger(__name__)
-
 from pyplotter.plotters.plots import Plotter
 from pyplotter.io.parser import DataParser
-from pyatoms.utils.utils import spline_data
+from pyplotter.utils.utils import spline_data
 from matplotlib import pyplot as plt
 
 class NormBarPlotter(Plotter):
@@ -41,9 +37,9 @@ class NormBarPlotter(Plotter):
         colors = ['k', 'b', '#7922BA']
         markers = ['o', '*', 's']
 
-        fig = plt.figure()
+        # fig = plt.figure()
         plt.rc('font', family='Arial')
-        axis_font = {'fontname': 'Arial', 'weight': 'bold', 'size': '22'}
+        # axis_font = {'fontname': 'Arial', 'weight': 'bold', 'size': '22'}
         plt.rc('axes', linewidth=2)
 
         for i in range(self.num_files):
@@ -71,7 +67,10 @@ class NormBarPlotter(Plotter):
         plt.plot(x1, y1_strain, 'b-', label='distortion')
         plt.plot(x1, y1_interaction, color=colors[-1], linestyle='-', label='interaction')
 
-        x_min_all = []; x_max_all = []; y_min_all = []; y_max_all = []
+        x_min_all = []
+        x_max_all = []
+        y_min_all = []
+        y_max_all = []
 
         for i in range(self.num_files):
             x_min_all.append(min(self.all_data[i][0]))
@@ -111,20 +110,3 @@ class NormBarPlotter(Plotter):
         ax.legend(loc="upper center", ncol=3, frameon=True, columnspacing=1.5, prop={'size': 12}, handletextpad=0.3)
         plt.savefig('test.pdf', format='pdf', dpi=500, bbox_inches='tight')
         plt.show()
-
-
-@click.command()
-@click.option('-f', '--filenames', type=str, multiple=True, help='Filenames to plot. Accepts multiple values.')
-@click.option('-l', '--new-length', type=int, default=1000, help='Number of spline points.')
-@click.option('-k', '--k-value', type=int, default=3, help='Degree of the smoothing spline. Must be 1 <= k <= 5. k = 3 is a cubic spline. Default is 3.')
-@click.option('-r', '--reversed/--no-reversed', type=bool, default=True, help='Option to reverse reaction coordinates.')
-@click.option('-x', '--x-scale', type=float, default=0.05, help='Scale along xlim.')
-@click.option('-y', '--y-scale', type=float, default=3, help='Scale along y-lim.')
-def entry_point(filenames, new_length, k_value, reversed, x_scale, y_scale):
-    """ Example usage:
-    dias_plot_all_data.py -f udc3_mCF3_c8_ts_ircr_dias_dias_data.txt -f udc3_oCF3_c6_ts_ircf_dias_dias_data.txt -y 0.05"""
-    dias_plotter = DIASPlotter(filenames)
-    dias_plotter.plot_all(new_length=new_length, k=k_value, reversed=reversed, x_scale=x_scale, y_scale=y_scale)
-
-if __name__ == '__main__':
-    entry_point()

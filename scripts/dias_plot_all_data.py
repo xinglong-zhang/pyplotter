@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 import click
-import logging
-logger = logging.getLogger(__name__)
 from pyplotter.io.parser import DataParser
-from pyatoms.utils.utils import spline_data
+from pyplotter.utils.utils import spline_data
 from matplotlib import pyplot as plt
 
 class DIASPlotter(object):
@@ -80,7 +78,10 @@ class DIASPlotter(object):
         plt.plot(x1, y1_strain, 'b-', label='distortion')
         plt.plot(x1, y1_interaction, color=colors[-1], linestyle='-', label='interaction')
 
-        x_min_all = []; x_max_all = []; y_min_all = []; y_max_all = []
+        x_min_all = []
+        x_max_all = []
+        y_min_all = []
+        y_max_all = []
 
         for i in range(self.num_files):
             x_min_all.append(min(self.all_data[i][0]))

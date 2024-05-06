@@ -2,9 +2,9 @@ import logging
 from pyplotter.plotters.plots import Plotter
 from pyplotter.plotters.errors_plots import ErrorPlotter
 from pyplotter.plotters.uvvis_plot import UVVisPlotter
-from pyatoms.utils.logging import create_logger
+from pyplotter.utils.utils import create_logger
 logger = logging.getLogger(__name__)
-create_logger(stream=True)
+create_logger()
 
 class TestPlotterTest(object):
     def test_plot_two_cols(self, tmpdir, two_cols_path):
@@ -47,12 +47,5 @@ class TestPlotterTest(object):
         plotter.plot_scatter_with_lines_and_error_bars(data_labels_list=['MTP', 'Schnet', 'ANI'])
 
     def test_plot_uvvis_data(self, tmpdir, uvvis_data):
-        plotter = UVVisPlotter(filename=uvvis_data, save_folder=tmpdir)
+        plotter = UVVisPlotter(filename=uvvis_data, save_folder=tmpdir, os_filter=0.1)
         plotter.plot_wavelengths(xlabel='wavelength / nm', ylabel="Molar absorptivity / L mol$^{-1}$ cm$^{-1}$")
-        # print(plotter.data[0])
-        # print()
-        # print(plotter.data[1])
-        # print()
-        print(plotter.data[2])
-        # plotter.plot_scatter_with_lines_and_error_bars(data_labels_list=['MTP', 'Schnet', 'ANI'])
-

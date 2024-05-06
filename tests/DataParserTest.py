@@ -1,6 +1,6 @@
 from pyplotter.io.parser import DataParser
 import logging
-from pyatoms.utils.logging import create_logger
+from pyplotter.utils.utils import create_logger
 logger = logging.getLogger(__name__)
 create_logger(stream=True)
 
