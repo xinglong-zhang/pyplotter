@@ -4,17 +4,17 @@ from cycler import cycler
 import logging
 from functools import update_wrapper
 
-default_cycler = (cycler(color=['r', 'g', 'b', 'y']) +
-                  cycler(linestyle=['-', '--', ':', '-.']))
+default_cycler = cycler(color=["r", "g", "b", "y"]) + cycler(
+    linestyle=["-", "--", ":", "-."]
+)
 
-custom_cycler = (cycler(color=['c', 'm', 'y', 'k']) +
-                 cycler(lw=[1, 2, 3, 4]))
+custom_cycler = cycler(color=["c", "m", "y", "k"]) + cycler(lw=[1, 2, 3, 4])
 
-color_cycler = cycler(color=['r', 'g', 'b', 'y', 'c', 'm', 'y', 'k'])
-linestyle_cycler = cycler(linestyle=['-', '--', ':', '-.'])
+color_cycler = cycler(color=["r", "g", "b", "y", "c", "m", "y", "k"])
+linestyle_cycler = cycler(linestyle=["-", "--", ":", "-."])
 linewidth_cycler = cycler(lw=[1, 2, 3, 4])
 
-colors = ['r', 'g', 'b', 'y', 'c', 'm', 'y', 'k']
+colors = ["r", "g", "b", "y", "c", "m", "y", "k"]
 
 
 def create_logger(debug=True, stream=True, disable=None):
@@ -24,7 +24,7 @@ def create_logger(debug=True, stream=True, disable=None):
     for module in disable:
         logging.getLogger(module).disabled = True
 
-    logging.getLogger('matplotlib').setLevel(logging.WARNING)
+    logging.getLogger("matplotlib").setLevel(logging.WARNING)
     logger = logging.getLogger()
 
     # Stream
@@ -53,6 +53,7 @@ def is_float(number):
     except ValueError:
         return False
 
+
 def spline_data(x, y, new_length=1000, k=3):
     from scipy.interpolate import UnivariateSpline
 
@@ -68,9 +69,10 @@ def spline_data(x, y, new_length=1000, k=3):
     new_y = UnivariateSpline(x1, y1, k=k)(new_x)
     return new_x, new_y
 
+
 class LazyProperty(property):
-    """ Lazy Property class from https://github.com/jackmaney/lazy-property
-    """
+    """Lazy Property class from https://github.com/jackmaney/lazy-property"""
+
     def __init__(self, method, fget=None, fset=None, fdel=None, doc=None):
 
         self.method = method

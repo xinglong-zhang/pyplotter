@@ -39,6 +39,7 @@ def entry_point(filename, save_folder, write_filename, plot_mode, degree_of_fit,
     Example usage:
     `plot_2d_line_bar.py -f  train_centered_bond_distances.txt -m grouped_line -lc 1: -lg -yl "bond distance\AA" -w train_centered_bond_distances_lines`
     `plot_2d_line_bar.py -f md_centered_bond_distances.txt -m line -xc 0 -yc 1 -w md_centered_bond_distances_9_22`
+    `plot_2d_line_bar.py -m scatter -d 1 -f relative_energies.txt -xc 1 -yc 2 -a 0 -x 1 -b 0 -y 8.5 -xl "Relative xTB Energy (kcal/mol)" -yl "Relative DFT Energy (kcal/mol)" -lf 20 --grid`
     """
     create_logger()
     plotter = Plotter(
