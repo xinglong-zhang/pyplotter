@@ -20,6 +20,8 @@ class Plotter(object):
         label_fontsize=10,  # fontsize of the axes labels
         save_format="pdf",  # format of the plot to be saved
         grid_on=False,  # to turn on or off grid
+        scatter_marker_color="blue",  # scatter plot marker color
+        scatter_line_color="red",  # scatter plot marker color
     ):
         self.filepath = os.path.abspath(filename)
         self.filename = self.filepath.split("/")[-1]
@@ -38,6 +40,8 @@ class Plotter(object):
         self.label_fontsize = label_fontsize
         self.save_format = save_format
         self.grid_on = grid_on
+        self.scatter_marker_color = scatter_marker_color
+        self.scatter_line_color = scatter_line_color
 
         plt = pretty_plot(width=plot_width, height=plot_height)
         self.plt = plt
@@ -111,7 +115,7 @@ class Plotter(object):
                 plt.plot(x_data, self.data[i], color=colors[i], ls="-", lw=1.5)
 
         elif plot_mode == "scatter":
-            plt.scatter(x_data, y_data, marker="o", lw=1.5)
+            plt.scatter(x_data, y_data, marker="o", c=self.scatter_marker_color, lw=1.5)
             if fit_degree is not None:
                 assert isinstance(fit_degree, int), (
                     f"Degree for fitting, {fit_degree}" f"is not an integer!"
@@ -125,8 +129,7 @@ class Plotter(object):
                 y_regression = poly_function(x_regression)
 
                 # Plot the regression line
-                plt.plot(x_regression, y_regression, color="r")
-                print(fit_degree)
+                plt.plot(x_regression, y_regression, color=self.scatter_line_color)
 
                 if fit_degree == 1:  # only add equation if linear fit
                     equation = f"y = {coefficients[0]:.2f}x + {coefficients[1]:.2f}"
