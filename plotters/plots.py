@@ -1,6 +1,6 @@
 import os
 import numpy as np
-from pymatgen.util.plotting import pretty_plot
+import matplotlib.pyplot as plt
 from pyplotter.io.parser import DataParser
 from ase.io import string2index
 
@@ -42,8 +42,6 @@ class Plotter(object):
         self.grid_on = grid_on
         self.scatter_marker_color = scatter_marker_color
         self.scatter_line_color = scatter_line_color
-
-        plt = pretty_plot(width=plot_width, height=plot_height)
         self.plt = plt
 
     def plot_2d_line_scatter_bars(
