@@ -18,14 +18,14 @@ from pyplotter.plotters.plots import Plotter
 @click.option(
     "-xo",
     "--x-offset",
-    type=int,
+    type=float,
     default=0,
     help="x-offset to label equation position.",
 )
 @click.option(
     "-yo",
     "--y-offset",
-    type=int,
+    type=float,
     default=0,
     help="y-offset to label equation position.",
 )
