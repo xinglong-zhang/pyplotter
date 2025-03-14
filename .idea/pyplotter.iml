@@ -9,6 +9,8 @@
     </content>
     <content url="file://$MODULE_DIR$/../solvation">
       <sourceFolder url="file://$MODULE_DIR$/../solvation" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../solvation/solvation/scripts" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../solvation/solvation/scripts/xz" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.9 (pyatoms-dev)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
